@@ -4,6 +4,9 @@
   import TitleBar from "./TitleBar.svelte";
 
   let pagenumber = $state(0);
+  setInterval(() => {
+    pagenumber = (pagenumber + 1) % 4;
+  }, 30000);
 </script>
 
 <main class="p-20">

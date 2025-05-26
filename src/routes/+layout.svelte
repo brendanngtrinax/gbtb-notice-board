@@ -4,6 +4,6 @@
   let { children } = $props();
 </script>
 
-<img class="absolute" src="/background.png" alt="background" />
+<img class="absolute z-[-20]" src="/background.png" alt="background" />
 
 {@render children()}
