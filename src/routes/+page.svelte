@@ -3,10 +3,30 @@
   import PageLoading from "./PageLoading.svelte";
   import TitleBar from "./TitleBar.svelte";
 
+  let interval = 30000;
+
   let pagenumber = $state(0);
+  let flipstatus = $state([false, false, false, false]);
+
   setInterval(() => {
-    pagenumber = (pagenumber + 1) % 4;
-  }, 30000);
+    // 1. Start flipping before page changes
+    for (let i = 0; i < flipstatus.length; i++) {
+      setTimeout(() => {
+        // Flip card i
+        flipstatus[i] = true;
+
+        // Flip back after 2s
+        setTimeout(() => {
+          flipstatus[i] = false;
+        }, 2000);
+      }, i * 250); // Staggered start
+    }
+
+    // 2. Change page AFTER flips start
+    setTimeout(() => {
+      pagenumber = (pagenumber + 1) % 4;
+    }, 1000); // 1 second before interval ends
+  }, interval);
 </script>
 
 <main class="p-20">
@@ -33,6 +53,6 @@
     dates and never miss out.
   </h1>
   <TitleBar {pagenumber} />
-  <CardDeck {pagenumber} />
+  <CardDeck {pagenumber} {flipstatus} />
   <PageLoading {pagenumber} />
 </main>
